@@ -1,39 +1,33 @@
 pipeline {
-    // no agent required to run here. All steps run in flyweight executor on Master
-    agent none
+  agent any
 
-    stages {
-        stage("foo") {
-            steps {
-                echo "hello"
-            }
-        }
+  // This defines job parameters that are populated before job is run or default is used
+  parameters {
+    booleanParam(defaultValue: true, description: '', name: 'flag')
+    string(defaultValue: '', description: '', name: 'SOME_STRING')
+  }
+
+  // Triggers define how the job is triggered.
+  // Jobs may still be triggered manually or by webhook as well here.
+  triggers {
+    cron('@daily')
+  }
+
+  // Options covers all other job properties or wrapper functions that apply to entire Pipeline.
+  options {
+    buildDiscarder(logRotator(numToKeepStr:'1'))
+    disableConcurrentBuilds()
+    skipDefaultCheckout(true)
+    timeout(time: 5, unit: 'MINUTES')
+    timestamps()
+  }
+
+  stages {
+    stage("foo") {
+      steps {
+        echo "hello"
+        sh "test -f Jenkinsfile"
+      }
     }
-    post {
-    /*
-     * These steps will run at the end of the pipeline based on the condition.
-     * Post conditions run in order regardless of their place in pipeline
-     * 1. always - always run
-     * 2. changed - run if something changed from last run
-     * 3. aborted, success, unstable or failure - depending on status
-     */
-        always {
-            echo "I AM ALWAYS first"
-        }
-        changed {
-            echo "CHANGED is run second"
-        }
-        aborted {
-          echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED are exclusive of each other"
-        }
-        success {
-            echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
-        }
-        unstable {
-          echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
-        }
-        failure {
-            echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
-        }
-    }
+  }
 }
