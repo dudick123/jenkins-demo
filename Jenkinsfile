@@ -1,10 +1,12 @@
 pipeline {
   agent any
+  environment {
+      MY_NAME = 'Mary'
+  }
   stages {
     stage('foo') {
       steps {
-        sh 'ls'
-        sh 'echo "The answer is 42"'
+        sh 'ls'        
       }
     }
   }
