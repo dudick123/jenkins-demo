@@ -1,32 +1,26 @@
 pipeline {
-  agent any
-
-  // This defines job parameters that are populated before job is run or default is used
-  parameters {
-    booleanParam(defaultValue: true, description: '', name: 'flag')
-    string(defaultValue: '', description: '', name: 'SOME_STRING')
-  }
-
-  // Triggers define how the job is triggered.
-  // Jobs may still be triggered manually or by webhook as well here.
-  triggers {
-    cron('@daily')
-  }
-
-  // Options covers all other job properties or wrapper functions that apply to entire Pipeline.
-  options {
-    buildDiscarder(logRotator(numToKeepStr:'1'))
-    disableConcurrentBuilds()
-    skipDefaultCheckout(true)
-    timeout(time: 5, unit: 'MINUTES')
-    timestamps()
+  agent {
+    // executes on an executor with the label 'some-label' or 'docker'
+    label "some-label || docker"
   }
 
   stages {
     stage("foo") {
       steps {
-        echo "hello"
-        sh "test -f Jenkinsfile"
+        // variable assignment (other than environment variables) can only be done in a script block
+        // complex global variables (with properties or methods) can only be run in a script block
+        // env variables can also be set within a script block
+        script {
+          foo = docker.image('ubuntu')
+          env.bar = "${foo.imageName()}"
+          echo "foo: ${foo.imageName()}"
+        }
+      }
+    }
+    stage("bar") {
+      steps{
+        echo "bar: ${env.bar}"
+        echo "foo: ${foo.imageName()}"
       }
     }
   }
