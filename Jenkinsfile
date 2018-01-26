@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'nginx:alpine'
-    }
-    
-  }
+  agent any
   stages {
     stage('foo') {
       steps {
