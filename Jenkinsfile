@@ -4,7 +4,7 @@ pipeline {
     stage('foo') {
       steps {
         sh 'ls'
-        echo 'Hello $MY_NAME'
+        echo 'Hello ${MY_NAME}'
       }
     }
   }
