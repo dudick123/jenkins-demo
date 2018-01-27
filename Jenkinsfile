@@ -4,9 +4,10 @@ pipeline {
     stage("foo") {
       steps {
         sh 'ls'  
-        sh '''
-            ./cd/images-build.sh
-        '''		
+        sh 'whoami'
+        //sh '''
+        //    ./cd/images-build.sh
+        //'''		
       }
     }
   }
