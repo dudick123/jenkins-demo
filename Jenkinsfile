@@ -9,6 +9,9 @@ pipeline {
             whoami
             ls
             cd cd/
+            ls
+            touch foo.txt
+            ls
         '''		
       }
     }
