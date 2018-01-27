@@ -6,7 +6,8 @@ pipeline {
         sh 'ls'  
         sh 'whoami'
         sh '''
-            ./cd/images-build.sh
+            whoami
+            ls
         '''		
       }
     }
