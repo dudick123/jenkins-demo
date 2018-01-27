@@ -13,13 +13,13 @@ pipeline {
             touch foo.txt
             ls
         '''
-        sh 'docker stop web-app && docker rm web-app'
+        //sh 'docker stop web-app && docker rm web-app'
       }
     }
     stage('Build Image') {
       steps {
         echo 'Building Images'
-        sh 'docker build --tag web-app:$BUILD_NUMBER .'        
+        //sh 'docker build --tag web-app:$BUILD_NUMBER .'        
       }
     }
   }
