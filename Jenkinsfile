@@ -5,9 +5,9 @@ pipeline {
       steps {
         sh 'ls'  
         sh 'whoami'
-        //sh '''
-        //    ./cd/images-build.sh
-        //'''		
+        sh '''
+            ./cd/images-build.sh
+        '''		
       }
     }
   }
