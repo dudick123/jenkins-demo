@@ -3,7 +3,10 @@ pipeline {
   stages {
     stage("foo") {
       steps {
-        sh 'ls'        
+        sh 'ls'  
+        sh '''
+            ./cd/images-build.sh
+        '''		
       }
     }
   }
