@@ -1,3 +1,3 @@
 # build images
-echo "Building Images"
+#echo "whoami"
 #docker-compose build
