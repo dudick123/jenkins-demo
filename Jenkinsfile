@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage("foo") {
+    stage('foo') {
       steps {
-        sh 'ls'  
+        sh 'ls'
         sh 'whoami'
         sh '''
             whoami
@@ -12,7 +12,12 @@ pipeline {
             ls
             touch foo.txt
             ls
-        '''		
+        '''
+      }
+    }
+    stage('Build Image') {
+      steps {
+        echo 'Building Images'
       }
     }
   }
