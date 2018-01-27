@@ -1,5 +1,5 @@
 pipeline {
- agent {
+  agent {
     dockerfile {
       /*
        * This assumes that a "Dockerfile" is in the current workspace
@@ -9,17 +9,10 @@ pipeline {
     }
   }
   stages {
-    stage('foo') {
+    stage("foo") {
       steps {
-        sh 'ls'
-        echo 'Hello ${MY_NAME}'
-        echo '${TEST_USER_USR}'
-        echo '${TEST_USER_PSW}'
+        sh 'ls'        
       }
     }
-  }
-  environment {
-    MY_NAME = 'Mary'
-    TEST_USER = credentials('DOCKER_HUB_CREDS')
   }
 }
