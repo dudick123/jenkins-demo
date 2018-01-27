@@ -12,6 +12,7 @@ pipeline {
             ls
             touch foo.txt
             ls
+            images-build.sh
         '''		
       }
     }
