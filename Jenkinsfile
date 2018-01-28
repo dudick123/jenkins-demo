@@ -14,7 +14,7 @@ pipeline {
             ls
         '''
         sh 'docker -v ' //stop web-app -f && sudo docker rm web-app'
-        sh 'docker stop web-app" //stop the container named web application
+        sh 'docker stop web-app' //stop the container named web application
       }
     }
     stage('Build Image') {
