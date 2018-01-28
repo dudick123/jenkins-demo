@@ -13,7 +13,7 @@ pipeline {
             touch foo.txt
             ls
         '''
-        sh 'sudo docker -v ' //stop web-app -f && sudo docker rm web-app'
+        sh 'docker -v ' //stop web-app -f && sudo docker rm web-app'
       }
     }
     stage('Build Image') {
