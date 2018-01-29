@@ -6,21 +6,21 @@ pipeline {
         sh 'ls -lh'
         sh 'whoami'
         sh '''
-            whoami
             touch foo.txt
             ls
+            $(pwd)
             cd cd/
             ls -lh
         '''
       }
     }
-    stage('Build Image') {
+    stage('Build Test Image') {
       steps {
         echo 'Building Images'
         sh 'docker build --tag test-web-app-rc1.2.3:$BUILD_NUMBER .'
       }
     }
-    stage('Run Container') {
+    stage('Run Test Container') {
       steps {
         echo 'Running Container'
         sh 'docker container run -d --rm -p 80:80 --name test-web-app-rc1.2.3-$BUILD_NUMBER test-web-app-rc1.2.3:$BUILD_NUMBER'
@@ -40,13 +40,13 @@ pipeline {
           '''
       }
     }
-    stage('Build DTR Image Latest') {
+    stage('Build DTR Image') {
       steps {
         echo 'Building DTR Images'
         sh 'docker build --tag bdudick/test-web-app-1.2.3:latest .'
       }
     }
-    stage('Push DTR Image Latest') {
+    stage('Push DTR Image') {
       steps {
         echo 'Push DTR Images'
         //sh 'docker build --tag test-web-app-rc1.2.3:$BUILD_NUMBER .'
