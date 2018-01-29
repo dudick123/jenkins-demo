@@ -37,7 +37,7 @@ pipeline {
       steps {
         echo 'Running Experiment Stage'
          sh '''
-            ./cd/images-build.sh
+            bash ./cd/images-build.sh
           '''
       }
     }
