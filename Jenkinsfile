@@ -37,7 +37,7 @@ pipeline {
       steps {
         echo 'Running Experiment Stage'
          sh '''
-            //./ci/test/stress.sh
+            ./cd/images-build.sh
           '''
       }
     }
