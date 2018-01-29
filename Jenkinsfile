@@ -17,13 +17,13 @@ pipeline {
     stage('Build Image') {
       steps {
         echo 'Building Images'
-        sh 'docker build --tag web-app:$BUILD_NUMBER .'
+        sh 'docker build --tag test-web-app-rc1.2.3:$BUILD_NUMBER .'
       }
     }
     stage('Run Container') {
       steps {
         echo 'Running Container'
-        sh 'docker container run -d --rm -p 80:80 --name test-web-app-$BUILD_NUMBER web-app:$BUILD_NUMBER'
+        sh 'docker container run -d --rm -p 80:80 --name test-web-app-rc1.2.3-$BUILD_NUMBER test-web-app-rc1.2.3:$BUILD_NUMBER'
       }
     }
     stage('Test Container') {
@@ -40,6 +40,18 @@ pipeline {
           '''
       }
     }
+    stage('Build DTR Image Latest') {
+      steps {
+        echo 'Building DTR Images'
+        sh 'docker build --tag bdudick/test-web-app-1.2.3:latest .'
+      }
+    }
+    stage('Push DTR Image Latest') {
+      steps {
+        echo 'Push DTR Images'
+        //sh 'docker build --tag test-web-app-rc1.2.3:$BUILD_NUMBER .'
+      }
+    }
   }
   post {
     /*
@@ -51,9 +63,9 @@ pipeline {
      */
         always {
             echo "I AM ALWAYS first"
-            sh 'docker container stop test-web-app-$BUILD_NUMBER'
+            sh 'docker container stop test-web-app-rc1.2.3-$BUILD_NUMBER'
             //move the docekr image rmi step to? 
-            sh 'docker image rmi web-app:$BUILD_NUMBER'
+            sh 'docker image rmi test-web-app-rc1.2.3:$BUILD_NUMBER'
             archiveArtifacts artifacts: '*.txt', fingerprint: true
         }
         changed {
