@@ -34,11 +34,6 @@ pipeline {
         echo 'Testing Container'
         sh 'curl http://localhost'        
       }
-    }
-    stage('Capacity Test') {
-          sh '''
-            //./cd/test/stress.sh
-          '''
-    }
+    }    
   }
 }
