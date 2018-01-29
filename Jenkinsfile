@@ -52,6 +52,8 @@ pipeline {
         always {
             echo "I AM ALWAYS first"
             sh 'docker container stop test-web-app-$BUILD_NUMBER'
+            //move the docekr image rmi step to? 
+            sh 'docker image rmi web-app:$BUILD_NUMBER'
             archiveArtifacts artifacts: '*.txt', fingerprint: true
         }
         changed {
@@ -67,8 +69,7 @@ pipeline {
           echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
         }
         failure {
-            echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
-            sh 'docker image rmi web-app:$BUILD_NUMBER'
+            echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"            
         }
     }
 }
