@@ -68,6 +68,7 @@ pipeline {
         }
         failure {
             echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
+            sh 'docker image rmi web-app:$BUILD_NUMBER'
         }
     }
 }
