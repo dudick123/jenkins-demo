@@ -29,5 +29,11 @@ pipeline {
         sh 'docker container run -d -p 80:80 --name web-app-$BUILD_NUMBER web-app:$BUILD_NUMBER'        
       }
     }
+    stage('Test Container') {
+      steps {
+        echo 'Testing Container'
+        sh 'curl http://localhost'        
+      }
+    }
   }
 }
