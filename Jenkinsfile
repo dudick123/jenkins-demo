@@ -36,6 +36,9 @@ pipeline {
     stage('Experiment') {
       steps {
         echo 'Running Experiment Stage'
+         sh '''
+            //./ci/test/stress.sh
+          '''
       }
     }
   }
