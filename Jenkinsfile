@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('foo') {
       steps {
-        sh 'ls'
+        sh 'ls -lh'
         sh 'whoami'
         sh '''
             whoami
             ls
             cd cd/
-            ls
+            ls -lh
             touch foo.txt
             ls
         '''
