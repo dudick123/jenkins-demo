@@ -7,11 +7,10 @@ pipeline {
         sh 'whoami'
         sh '''
             whoami
+            touch foo.txt
             ls
             cd cd/
             ls -lh
-            touch foo.txt
-            ls
         '''
       }
     }
@@ -53,6 +52,7 @@ pipeline {
         always {
             echo "I AM ALWAYS first"
             sh 'docker container stop test-web-app-$BUILD_NUMBER'
+            archiveArtifacts artifacts: '*.txt', fingerprint: true
         }
         changed {
             echo "CHANGED is run second"
