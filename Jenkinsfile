@@ -10,8 +10,7 @@ pipeline {
         sh 'whoami'
         sh '''
             touch foo.txt
-            ls
-            $(pwd)
+            ls            
             cd cd/
             ls -lh
         '''
