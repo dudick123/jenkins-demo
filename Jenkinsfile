@@ -35,5 +35,10 @@ pipeline {
         sh 'curl http://localhost'        
       }
     }
+    stage('Capacity Test') {
+          sh '''
+            //./cd/test/stress.sh
+          '''
+    }
   }
 }
