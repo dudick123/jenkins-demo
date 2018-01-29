@@ -26,7 +26,7 @@ pipeline {
     stage('Run Container') {
       steps {
         echo 'Running Container'
-        sh 'docker container run -d -p 80:80 --name web-app:$BUILD_NUMBER web-app:$BUILD_NUMBER'        
+        sh 'docker container run -d -p 80:80 --name web-app-$BUILD_NUMBER web-app:$BUILD_NUMBER'        
       }
     }
   }
