@@ -10,12 +10,11 @@ rc=$(curl -s -o /dev/null -w "%{http_code}" http://localhost)
 # let logging catch up
 sleep 1
 
-echo rc
-#if [ $rc1 -eq 0 ]
-#then
-#    echo "Image test passed"
-#else
-#    >&2 echo "An HTTP Request in the image test failed"
-#fi
+if [ $rc == "200" ]
+then
+    echo "Image test passed"
+else
+    >&2 echo "An HTTP Request in the image test failed"
+fi
 
-#exit $rc
+exit $rc
