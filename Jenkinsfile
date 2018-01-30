@@ -7,7 +7,7 @@ pipeline {
   environment {
     // Eliminate magic strings
 	REPOSITORY_NAME = "bdudick"
-    IMAGE_TAG = "test-web-app-rc1.2.3"
+        IMAGE_TAG = "test-web-app-rc1.2.3"
 	CONTAINER_NAME = "test-web-app-rc1.2.3-"
 	FOO = "PIPELINE"
   }
@@ -26,10 +26,10 @@ pipeline {
       }
     }
 	stage('Pre-Build') {
-      steps {
+        steps {
         echo 'Make sure the Docker Environment is ready for the build steps.'
         echo 'Remove Containers which may cause name or port conflicts.'
-		echo 'Remove Images which may cause tag conflicts.'
+	echo 'Remove Images which may cause tag conflicts.'
       }
     }
     stage('Build Test Image') {
@@ -62,7 +62,7 @@ pipeline {
       steps {
         echo 'Building DTR Images'
         sh 'docker build --tag $REPOSITORY_NAME/$IMAGE_TAG:latest .'
-		sh 'docker image inspect $REPOSITORY_NAME/$IMAGE_TAG:latest'
+	sh 'docker image inspect $REPOSITORY_NAME/$IMAGE_TAG:latest'
       }
     }
     stage('Push DTR Image') {
