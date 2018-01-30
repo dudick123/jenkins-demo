@@ -25,6 +25,13 @@ pipeline {
         '''
       }
     }
+	stage('Pre-Build') {
+      steps {
+        echo 'Make sure the Docker Environment is ready for the build steps.'
+        echo 'Remove Containers which may cause name or port conflicts.'
+		echo 'Remove Images which may cause tag conflicts.'
+      }
+    }
     stage('Build Test Image') {
       steps {
         echo 'Building Images'
@@ -74,9 +81,9 @@ pipeline {
      * 3. aborted, success, unstable or failure - depending on status
      */
         always {
-            echo "I AM ALWAYS first"
-            sh 'docker container stop $CONTAINER_NAME-$BUILD_NUMBER'
-            //move the docekr image rmi step to? 
+            echo "Always is is always the first post pipeline step to run."
+            sh 'docker container stop $CONTAINER_NAME-$BUILD_NUMBER' 
+            //move the docker image rmi step to? 
             sh 'docker image rmi $IMAGE_TAG:$BUILD_NUMBER'
             archiveArtifacts artifacts: '*.txt', fingerprint: true
         }
@@ -84,16 +91,16 @@ pipeline {
             echo "CHANGED is run second"
         }
         aborted {
-          echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED are exclusive of each other"
+          echo "This build was aborted. The system or the user stopped the run. Perform aborted actions."
         }
         success {
-            echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
+            echo "This build was successful. All steps completed. Perform successful type actions."
         }
         unstable {
-          echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"
+          echo "This build is unstable. There was a test that failed. Perform unstable type actions."
         }
         failure {
-            echo "SUCCESS, FAILURE, UNSTABLE, or ABORTED runs last"            
+            echo "This build is a failure. Build steps could not be completed. Perform unstable type actions"            
         }
     }
 }
