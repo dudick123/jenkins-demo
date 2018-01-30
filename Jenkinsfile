@@ -77,7 +77,7 @@ pipeline {
             echo "I AM ALWAYS first"
             sh 'docker container stop $CONTAINER_NAME-$BUILD_NUMBER'
             //move the docekr image rmi step to? 
-            sh 'docker image rmi IMAGE_TAG:$BUILD_NUMBER'
+            sh 'docker image rmi $IMAGE_TAG:$BUILD_NUMBER'
             archiveArtifacts artifacts: '*.txt', fingerprint: true
         }
         changed {
