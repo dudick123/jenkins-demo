@@ -3,6 +3,12 @@ pipeline {
   triggers {
         pollSCM('H 8-18/1 * * 1-5')
   }
+  
+  environment {
+    // FOO will be available in entire pipeline
+    FOO = "PIPELINE"
+  }
+  
   stages {
     stage('foo') {
       steps {
@@ -46,6 +52,7 @@ pipeline {
       steps {
         echo 'Building DTR Images'
         sh 'docker build --tag bdudick/test-web-app-1.2.3:latest .'
+		sh 'docker image inspect bdudick/test-web-app-1.2.3:latest'
       }
     }
     stage('Push DTR Image') {
