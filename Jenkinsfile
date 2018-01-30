@@ -7,7 +7,7 @@ pipeline {
   environment {
     // Eliminate magic strings
 	REPOSITORY_NAME = "bdudick"
-    IMAGE_TAG = "test-web-app-rc1.2.3:"
+    IMAGE_TAG = "test-web-app-rc1.2.3"
 	CONTAINER_NAME = "test-web-app-rc1.2.3-"
 	FOO = "PIPELINE"
   }
