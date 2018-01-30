@@ -5,8 +5,11 @@ pipeline {
   }
   
   environment {
-    // FOO will be available in entire pipeline
-    FOO = "PIPELINE"
+    // Eliminate magic strings
+	REPOSITORY_NAME = "bdudick"
+    IMAGE_TAG = "test-web-app-rc1.2.3:"
+	CONTAINER_NAME = "test-web-app-rc1.2.3-"
+	FOO = "PIPELINE"
   }
   
   stages {
@@ -25,13 +28,13 @@ pipeline {
     stage('Build Test Image') {
       steps {
         echo 'Building Images'
-        sh 'docker build --tag test-web-app-rc1.2.3:$BUILD_NUMBER .'
+        sh 'docker build --tag $IMAGE_TAG:$BUILD_NUMBER .'
       }
     }
     stage('Run Test Container') {
       steps {
         echo 'Running Container'
-        sh 'docker container run -d --rm -p 80:80 --name test-web-app-rc1.2.3-$BUILD_NUMBER test-web-app-rc1.2.3:$BUILD_NUMBER'
+        sh 'docker container run -d --rm -p 80:80 --name $CONTAINER_NAME-$BUILD_NUMBER $IMAGE_TAG:$BUILD_NUMBER'
       }
     }
     stage('Test Container') {
@@ -51,8 +54,8 @@ pipeline {
     stage('Build DTR Image') {
       steps {
         echo 'Building DTR Images'
-        sh 'docker build --tag bdudick/test-web-app-1.2.3:latest .'
-		sh 'docker image inspect bdudick/test-web-app-1.2.3:latest'
+        sh 'docker build --tag $REPOSITORY_NAME/$IMAGE_TAG:latest .'
+		sh 'docker image inspect $REPOSITORY_NAME/IMAGE_TAG:latest'
       }
     }
     stage('Push DTR Image') {
@@ -72,9 +75,9 @@ pipeline {
      */
         always {
             echo "I AM ALWAYS first"
-            sh 'docker container stop test-web-app-rc1.2.3-$BUILD_NUMBER'
+            sh 'docker container stop $CONTAINER_NAME-$BUILD_NUMBER'
             //move the docekr image rmi step to? 
-            sh 'docker image rmi test-web-app-rc1.2.3:$BUILD_NUMBER'
+            sh 'docker image rmi IMAGE_TAG:$BUILD_NUMBER'
             archiveArtifacts artifacts: '*.txt', fingerprint: true
         }
         changed {
