@@ -55,7 +55,7 @@ pipeline {
       steps {
         echo 'Building DTR Images'
         sh 'docker build --tag $REPOSITORY_NAME/$IMAGE_TAG:latest .'
-		sh 'docker image inspect $REPOSITORY_NAME/IMAGE_TAG:latest'
+		sh 'docker image inspect $REPOSITORY_NAME/$IMAGE_TAG:latest'
       }
     }
     stage('Push DTR Image') {
