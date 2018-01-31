@@ -6,11 +6,14 @@ set -e
 # at this point, image should be built and start within 5 seconds
 sleep 5
 
-rc=$(curl -s -o /dev/null -w "%{http_code}" http://localhost)
+rc1=$(curl -s -o /dev/null -w "%{http_code}" http://localhost)
 # let logging catch up
 sleep 1
 
-if [ $rc == "200" ]
+[ $rc1 == "200" ]
+rc=$?
+
+if [ $rc -eq 0 ]
 then
     echo "Image test passed"
 else
