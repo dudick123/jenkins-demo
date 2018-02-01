@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
+	   echo 'Running Setup'
         sh 'ls -lh'
         sh 'whoami'
         sh '''
@@ -13,55 +14,45 @@ pipeline {
         '''
       }
     }
-    stage('Pre-Build') {
+    stage('Prepare Pipeline') {
       steps {
         //Adding Comments To Trigger Build
-        echo 'Make sure the Docker Environment is ready for the build steps.'
-        echo 'Remove Containers which may cause name or port conflicts.'
-        echo 'Remove Images which may cause tag conflicts.'
+		sh 'bash ./cd/prepare-pipeline.sh'
       }
     }
-    stage('Build Test Image') {
+    stage('Build Initial Image') {
       steps {
         echo 'Building Images'
         sh 'docker build --tag $IMAGE_TAG:$BUILD_NUMBER .'
+		//sh 'bash ./cd/images-build-initial.sh'
       }
     }
-    stage('Run Test Container') {
+    stage('Run Initial Container') {
       steps {
-        echo 'Running Container'
-        sh 'docker container run -d --rm -p 80:80 --name $CONTAINER_NAME-$BUILD_NUMBER $IMAGE_TAG:$BUILD_NUMBER'
+        echo 'Running Container'        
+		sh 'bash ./cd/container-run-initial.sh'
       }
     }
-    stage('Test Container') {
+    stage('Test Initial Container') {
       steps {
-        echo 'Testing Container'
         sh 'curl http://localhost'
-      }
-    }
-    stage('Experiment') {
-      steps {
-        echo 'Running Experiment Stage'
-        sh '''
-            bash ./cd/images-test.sh
-          '''
+		sh 'bash ./cd/container-test-initial.sh'
       }
     }
     stage('Build DTR Image') {
       steps {
         echo 'Building DTR Images'
-        sh 'docker build --tag $REPOSITORY_NAME/$IMAGE_TAG:latest .'
-        sh 'docker image inspect $REPOSITORY_NAME/$IMAGE_TAG:latest'
+		sh 'bash ./cd/images-build-dtr.sh'
       }
     }
     stage('Push DTR Image') {
       steps {
-        echo 'Push DTR Images'
+		sh 'bash ./cd/images-push-dtr.sh'
       }
     }
     stage('Tear Down') {
       steps {
-        echo 'Running Tear Down'
+		echo 'Running Tear Down'
       }
     }
   }
@@ -74,10 +65,8 @@ pipeline {
   post {
     always {
       echo 'Always is is always the first post pipeline step to run.'
-      sh 'docker container stop $CONTAINER_NAME-$BUILD_NUMBER'
-      sh 'docker image rmi $IMAGE_TAG:$BUILD_NUMBER'
-      archiveArtifacts(artifacts: '*.txt', fingerprint: true)
-      
+	  sh 'bash ./cd/teardown-pipeline.sh'      
+      archiveArtifacts(artifacts: '*.txt', fingerprint: true)      
     }
     
     changed {
@@ -86,8 +75,7 @@ pipeline {
     }
     
     aborted {
-      echo 'This build was aborted. The system or the user stopped the run. Perform aborted actions.'
-      
+      echo 'This build was aborted. The system or the user stopped the run. Perform aborted actions.'      
     }
     
     success {
@@ -96,13 +84,11 @@ pipeline {
     }
     
     unstable {
-      echo 'This build is unstable. There was a test that failed. Perform unstable type actions.'
-      
+      echo 'This build is unstable. There was a test that failed. Perform unstable type actions.'      
     }
     
     failure {
-      echo 'This build is a failure. Build steps could not be completed. Perform unstable type actions'
-      
+      echo 'This build is a failure. Build steps could not be completed. Perform unstable type actions'      
     }
     
   }

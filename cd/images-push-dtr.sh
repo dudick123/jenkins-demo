@@ -1,0 +1,1 @@
+echo "Executing Images Push DTR"
