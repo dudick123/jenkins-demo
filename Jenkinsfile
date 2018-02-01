@@ -2,7 +2,6 @@ pipeline {
   agent any
   stages {
     stage('Goof Around') {
-      //Adding a comment
       steps {
         echo 'Running Setup'
         sh 'ls -lh'
