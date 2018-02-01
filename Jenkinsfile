@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Setup') {
       steps {
-	   echo 'Running Setup'
+        echo 'Running Setup'
         sh 'ls -lh'
         sh 'whoami'
         sh '''
@@ -16,39 +16,32 @@ pipeline {
     }
     stage('Prepare Pipeline') {
       steps {
-        //Adding Comments To Trigger Build
-		sh 'bash ./cd/prepare-pipeline.sh'
+        sh 'bash ./cd/prepare-pipeline.sh'
       }
     }
     stage('Build Initial Image') {
-      steps {        
-        //sh 'docker build --tag $IMAGE_TAG:$BUILD_NUMBER .'
-		sh 'bash ./cd/images-build-initial.sh'
+      steps {
+        sh 'bash ./cd/images-build-initial.sh'
       }
     }
     stage('Run Initial Container') {
-      steps {       
-		sh 'bash ./cd/container-run-initial.sh'
+      steps {
+        sh 'bash ./cd/container-run-initial.sh'
       }
     }
     stage('Test Initial Container') {
       steps {
-		sh 'bash ./cd/container-test-initial.sh'
+        sh 'bash ./cd/container-test-initial.sh'
       }
     }
     stage('Build DTR Image') {
       steps {
-		sh 'bash ./cd/images-build-dtr.sh'
+        sh 'bash ./cd/images-build-dtr.sh'
       }
     }
     stage('Push DTR Image') {
       steps {
-		sh 'bash ./cd/images-push-dtr.sh'
-      }
-    }
-    stage('Tear Down') {
-      steps {
-		echo 'Running Tear Down'
+        sh 'bash ./cd/images-push-dtr.sh'
       }
     }
   }
@@ -61,16 +54,19 @@ pipeline {
   post {
     always {
       echo 'Always is is always the first post pipeline step to run.'
-	  sh 'bash ./cd/teardown-pipeline.sh'      
-      archiveArtifacts(artifacts: '*.txt', fingerprint: true)      
+      sh 'bash ./cd/teardown-pipeline.sh'
+      archiveArtifacts(artifacts: '*.txt', fingerprint: true)
+      
     }
     
     changed {
       echo 'CHANGED is run second'
+      
     }
     
     aborted {
-      echo 'This build was aborted. The system or the user stopped the run. Perform aborted actions.'      
+      echo 'This build was aborted. The system or the user stopped the run. Perform aborted actions.'
+      
     }
     
     success {
@@ -79,11 +75,13 @@ pipeline {
     }
     
     unstable {
-      echo 'This build is unstable. There was a test that failed. Perform unstable type actions.'      
+      echo 'This build is unstable. There was a test that failed. Perform unstable type actions.'
+      
     }
     
     failure {
-      echo 'This build is a failure. Build steps could not be completed. Perform unstable type actions'      
+      echo 'This build is a failure. Build steps could not be completed. Perform unstable type actions'
+      
     }
     
   }
