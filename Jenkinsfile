@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Setup') {
+    stage('Goof Around') {
       steps {
         echo 'Running Setup'
         sh 'ls -lh'
