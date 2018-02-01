@@ -21,27 +21,23 @@ pipeline {
       }
     }
     stage('Build Initial Image') {
-      steps {
-        echo 'Building Images'
-        sh 'docker build --tag $IMAGE_TAG:$BUILD_NUMBER .'
-		//sh 'bash ./cd/images-build-initial.sh'
+      steps {        
+        //sh 'docker build --tag $IMAGE_TAG:$BUILD_NUMBER .'
+		sh 'bash ./cd/images-build-initial.sh'
       }
     }
     stage('Run Initial Container') {
-      steps {
-        echo 'Running Container'        
+      steps {       
 		sh 'bash ./cd/container-run-initial.sh'
       }
     }
     stage('Test Initial Container') {
       steps {
-        sh 'curl http://localhost'
 		sh 'bash ./cd/container-test-initial.sh'
       }
     }
     stage('Build DTR Image') {
       steps {
-        echo 'Building DTR Images'
 		sh 'bash ./cd/images-build-dtr.sh'
       }
     }
@@ -71,7 +67,6 @@ pipeline {
     
     changed {
       echo 'CHANGED is run second'
-      
     }
     
     aborted {
