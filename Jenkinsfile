@@ -16,7 +16,7 @@ pipeline {
     }
     stage('Prepare Pipeline') {
       steps {
-        sh 'bash ./cd/prepare-pipeline.sh'
+        sh 'bash ./cd/pipeline-prepare.sh'
       }
     }
     stage('Build Initial Image') {
@@ -26,12 +26,12 @@ pipeline {
     }
     stage('Run Initial Container') {
       steps {
-        sh 'bash ./cd/container-run-initial.sh'
+        sh 'bash ./cd/containers-run-initial.sh'
       }
     }
     stage('Test Initial Container') {
       steps {
-        sh 'bash ./cd/container-test-initial.sh'
+        sh 'bash ./cd/containers-test-initial.sh'
       }
     }
     stage('Build DTR Image') {

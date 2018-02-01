@@ -18,7 +18,7 @@ sleep 1
 
 docker image ls
 
-docker image rmi bdudick/test-web-app-rc1.2.3:latest
+docker image rmi $REPOSITORY_NAME/$IMAGE_TAG:latest
 
 sleep 1
 
