@@ -54,13 +54,14 @@ pipeline {
   post {
     always {
       echo 'Always is is always the first post pipeline step to run.'
-      sh 'bash ./cd/teardown-pipeline.sh'
+      sh 'bash ./cd/pipeline-post-always.sh'
       archiveArtifacts(artifacts: '*.txt', fingerprint: true)
       
     }
     
     changed {
       echo 'CHANGED is run second'
+      sh 'bash ./cd/pipeline-post-changed.sh'
       
     }
     
@@ -71,7 +72,7 @@ pipeline {
     
     success {
       echo 'This build was successful. All steps completed. Perform successful type actions.'
-      
+      sh 'bash ./cd/pipeline-post-success.sh'
     }
     
     unstable {
@@ -81,6 +82,7 @@ pipeline {
     
     failure {
       echo 'This build is a failure. Build steps could not be completed. Perform unstable type actions'
+      sh 'bash ./cd/pipeline-post-failure.sh'
       
     }
     
