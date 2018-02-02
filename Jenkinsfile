@@ -48,7 +48,7 @@ pipeline {
   environment {
     REPOSITORY_NAME = 'bdudick'
     IMAGE_TAG = 'test-web-app-rc1.2.3'
-    CONTAINER_NAME = 'test-web-app-rc1.2.3-'
+    CONTAINER_NAME = 'test-web-app-rc1.2.3'
     DOCKER_CREDS = credentials("docker-bdudick-credentials")
   }
   post {
