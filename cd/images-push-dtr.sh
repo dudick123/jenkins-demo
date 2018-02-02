@@ -4,3 +4,5 @@ echo "FOO_USR is $FOO_USR"
 echo "FOO_PSW is $FOO_PSW"
 
 docker login -u=$FOO_USR -p=$FOO_PSW
+
+docker push $REPOSITORY_NAME/$IMAGE_TAG:latest
