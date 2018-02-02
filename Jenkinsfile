@@ -49,7 +49,7 @@ pipeline {
     REPOSITORY_NAME = 'bdudick'
     IMAGE_TAG = 'test-web-app-rc1.2.3'
     CONTAINER_NAME = 'test-web-app-rc1.2.3-'
-    FOO = 'PIPELINE'
+    DOCKER_CREDS = credentials("docker-bdudick-credentials")
   }
   post {
     always {
