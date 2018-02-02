@@ -1,3 +1,6 @@
 echo "Executing Images Push DTR"
+echo "FOO is $FOO"
+echo "FOO_USR is $FOO_USR"
+echo "FOO_PSW is $FOO_PSW"
 
-sh 'echo FOO is $DOCKER_CREDS'
+#docker login -u=$FOO_USR -p=$FOO_PSW
