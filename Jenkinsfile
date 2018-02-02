@@ -52,7 +52,7 @@ pipeline {
                 sh 'echo $FOO_PSW > foo_psw.txt'
                 sh 'echo $FOO_USR > foo_usr.txt'
                 archive "**/*.txt"
-				//sh 'bash ./cd/images-push-dtr.sh'
+				sh 'bash ./cd/images-push-dtr.sh'
       }
     }
   }
