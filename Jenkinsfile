@@ -27,6 +27,7 @@ pipeline {
     stage('Run Initial Container') {
       steps {
         sh 'bash ./cd/containers-run-initial.sh'
+        sh 'cat ./cd/containers-run-initial.sh'
       }
     }
     stage('Test Initial Container') {
@@ -41,18 +42,17 @@ pipeline {
     }
     stage('Push DTR Image') {
       steps {
-				sh 'echo "FOO is $FOO"'
-                sh 'echo "FOO_USR is $FOO_USR"'
-                sh 'echo "FOO_PSW is $FOO_PSW"'
-
-                //Write to file
-                dir("combined") {
-                    sh 'echo $FOO > foo.txt'
-                }
-                sh 'echo $FOO_PSW > foo_psw.txt'
-                sh 'echo $FOO_USR > foo_usr.txt'
-                archive "**/*.txt"
-				sh 'bash ./cd/images-push-dtr.sh'
+        sh 'echo "FOO is $FOO"'
+        sh 'echo "FOO_USR is $FOO_USR"'
+        sh 'echo "FOO_PSW is $FOO_PSW"'
+        dir(path: 'combined') {
+          sh 'echo $FOO > foo.txt'
+        }
+        
+        sh 'echo $FOO_PSW > foo_psw.txt'
+        sh 'echo $FOO_USR > foo_usr.txt'
+        archive '**/*.txt'
+        sh 'bash ./cd/images-push-dtr.sh'
       }
     }
   }
@@ -60,7 +60,7 @@ pipeline {
     REPOSITORY_NAME = 'bdudick'
     IMAGE_TAG = 'test-web-app-rc1.2.3'
     CONTAINER_NAME = 'test-web-app-rc1.2.3'
-	FOO = credentials("docker-bdudick-credentials")
+    FOO = credentials('docker-bdudick-credentials')
   }
   post {
     always {
@@ -84,6 +84,7 @@ pipeline {
     success {
       echo 'This build was successful. All steps completed. Perform successful type actions.'
       sh 'bash ./cd/pipeline-post-success.sh'
+      
     }
     
     unstable {
