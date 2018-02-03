@@ -7,7 +7,7 @@ set -e
 # at this point, image should be built and start within 5 seconds
 sleep 5
 
-rc1=$(curl -s -o /dev/null -w "%{http_code}" http://localhost)
+rc1=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8181)
 # let logging catch up
 sleep 1
 
