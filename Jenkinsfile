@@ -12,6 +12,7 @@ pipeline {
             cd cd/
             ls -lh
         '''
+        echo 'Test Update'
       }
     }
     stage('Prepare Pipeline') {
@@ -27,7 +28,7 @@ pipeline {
     stage('Run Initial Container') {
       steps {
         sh 'cat ./cd/containers-run-initial.sh'
-        sh 'bash ./cd/containers-run-initial.sh'        
+        sh 'bash ./cd/containers-run-initial.sh'
       }
     }
     stage('Test Initial Container') {
