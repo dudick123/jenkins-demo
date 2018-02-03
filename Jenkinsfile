@@ -26,8 +26,8 @@ pipeline {
     }
     stage('Run Initial Container') {
       steps {
-        sh 'bash ./cd/containers-run-initial.sh'
         sh 'cat ./cd/containers-run-initial.sh'
+        sh 'bash ./cd/containers-run-initial.sh'        
       }
     }
     stage('Test Initial Container') {
