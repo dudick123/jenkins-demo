@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Executing Container Test Initial"
+echo "Executing Container Test Local"
 
 # stop on errors
 set -e

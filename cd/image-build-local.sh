@@ -1,2 +1,4 @@
 echo "Executing Images Build Local"
-docker build -f ../Dockerfile --tag test-image:latest .
+cp ../dockerfiles/Dockerfile.local ../Dockerfile
+cd ..
+docker build --tag test-image:latest .
