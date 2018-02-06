@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Executing Container Test Initial"
+echo "Executing Container Test Initial Usig Port 8181"
 
 # stop on errors
 set -e
