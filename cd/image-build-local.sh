@@ -1,2 +1,4 @@
-echo "Executing Build The Local Test Images"
-docker build -f home/thedudicks/code/jenkins-demo/Dockerfile --tag test-image:latest .
+echo "Executing Images Build Local"
+cp ../dockerfiles/Dockerfile.local ../Dockerfile
+cd ..
+docker build --tag test-image:latest .
