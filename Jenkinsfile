@@ -33,7 +33,7 @@ pipeline {
     }
     stage('Test Initial Container') {
       steps {
-        sh 'bash ./cd/containers-test-initial.sh'
+        sh '//bash ./cd/containers-test-initial.sh'
         sh 'curl http://localhost:8181'
       }
     }
