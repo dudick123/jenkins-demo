@@ -1,2 +1,2 @@
-echo "Executing Images Build DTR"
-docker build -f ../Dockerfile --tag test-image:latest .
+echo "Executing Build The Local Test Images"
+docker build -f home/thedudicks/code/jenkins-demo/Dockerfile --tag test-image:latest .
