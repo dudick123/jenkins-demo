@@ -1,8 +1,5 @@
 echo "Executing Images Push DTR"
-echo "FOO is $FOO"
-echo "FOO_USR is $FOO_USR"
-echo "FOO_PSW is $FOO_PSW"
 
-docker login -u=$FOO_USR -p=$FOO_PSW
+docker login -u=$DTR_CREDS_USR -p=$DTR_CREDS_PSW
 
 docker push $REPOSITORY_NAME/$IMAGE_TAG:latest

@@ -7,10 +7,9 @@ pipeline {
         sh 'ls -lh'
         sh 'whoami'
         sh '''
-            touch foo.txt
-            ls            
+            ls -lh >> root_dir.txt      
             cd cd/
-            ls -lh
+            ls -lh >> cd_dir.txt
         '''
         echo 'Test Update'
       }
@@ -42,17 +41,7 @@ pipeline {
       }
     }
     stage('Push DTR Image') {
-      steps {
-        sh 'echo "FOO is $FOO"'
-        sh 'echo "FOO_USR is $FOO_USR"'
-        sh 'echo "FOO_PSW is $FOO_PSW"'
-        dir(path: 'combined') {
-          sh 'echo $FOO > foo.txt'
-        }
-        
-        sh 'echo $FOO_PSW > foo_psw.txt'
-        sh 'echo $FOO_USR > foo_usr.txt'
-        archive '**/*.txt'
+      steps {        
         sh 'bash ./cd/images-push-dtr.sh'
       }
     }
@@ -61,14 +50,14 @@ pipeline {
     REPOSITORY_NAME = 'bdudick'
     IMAGE_TAG = 'test-web-app-rc1.2.3'
     CONTAINER_NAME = 'test-web-app-rc1.2.3'
-    FOO = credentials('docker-bdudick-credentials')
+    DTR_CREDS = credentials('docker-bdudick-credentials')
   }
   post {
     always {
       echo 'Always is is always the first post pipeline step to run.'
       sh 'bash ./cd/pipeline-post-always.sh'
-      archiveArtifacts(artifacts: '*.txt', fingerprint: true)
-      
+	  archive '**/*.txt'
+      //archiveArtifacts(artifacts: '*.txt', fingerprint: true)
     }
     
     changed {
