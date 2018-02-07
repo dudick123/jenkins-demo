@@ -1,0 +1,2 @@
+/code/jenkins-demoecho "Executing Images Build DTR"
+docker build -f /code/jenkins-demo/Dockerfile --tag test-image:latest .
