@@ -4,7 +4,6 @@ pipeline {
     stage('Goof Around') {
       steps {
         echo 'Running Setup'
-		checkout scm
         sh 'ls -lh'
         sh 'whoami'
         sh 'ls -lh >> root_dir.txt'
