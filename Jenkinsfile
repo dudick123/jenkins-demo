@@ -3,7 +3,7 @@ pipeline {
   
   // Options covers all other job properties or wrapper functions that apply to entire Pipeline.
   options {
-    buildDiscarder(logRotator(numToKeepStr:'1'))
+    buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
     disableConcurrentBuilds()
     timeout(time: 5, unit: 'MINUTES')
     timestamps()
