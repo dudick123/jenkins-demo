@@ -6,10 +6,7 @@ pipeline {
         echo 'Running Setup'
         sh 'ls -lh'
         sh 'whoami'
-        sh '''
-            ls -lh >> root_dir.txt      
-            ls cd/ -lh >> cd_dir.txt
-        '''
+        sh 'ls -lh >> root_dir.txt'
         echo 'Test Update'
       }
     }
