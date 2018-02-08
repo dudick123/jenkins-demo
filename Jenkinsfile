@@ -4,6 +4,7 @@ pipeline {
     stage('Goof Around') {
       steps {
         echo 'Running Setup'
+		checkout scm
         sh 'ls -lh'
         sh 'whoami'
         sh 'ls -lh >> root_dir.txt'
@@ -84,6 +85,6 @@ pipeline {
     
   }
   triggers {
-    pollSCM('H 8-18/1 * * 1-5')
+    //pollSCM('H 8-18/1 * * 1-5')
   }
 }
