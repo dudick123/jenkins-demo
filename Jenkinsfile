@@ -1,5 +1,14 @@
 pipeline {
   agent any
+  
+  // Options covers all other job properties or wrapper functions that apply to entire Pipeline.
+  options {
+    buildDiscarder(logRotator(numToKeepStr:'1'))
+    disableConcurrentBuilds()
+    timeout(time: 5, unit: 'MINUTES')
+    timestamps()
+  }
+  
   stages {
     stage('Goof Around') {
       steps {
