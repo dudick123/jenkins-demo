@@ -8,8 +8,7 @@ pipeline {
         sh 'whoami'
         sh '''
             ls -lh >> root_dir.txt      
-            cd cd/
-            ls -lh >> cd_dir.txt
+            ls cd/ -lh >> cd_dir.txt
         '''
         echo 'Test Update'
       }
