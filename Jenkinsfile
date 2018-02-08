@@ -83,7 +83,4 @@ pipeline {
     }
     
   }
-  triggers {
-    //pollSCM('H 8-18/1 * * 1-5')
-  }
 }
