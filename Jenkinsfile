@@ -57,6 +57,7 @@ pipeline {
       echo 'Always is is always the first post pipeline step to run.'
       sh 'bash ./cd/pipeline-post-always.sh'
 	  archive '**/*.txt'
+	  deleteDir() /* clean up our workspace */
       //archiveArtifacts(artifacts: '*.txt', fingerprint: true)
     }
     
