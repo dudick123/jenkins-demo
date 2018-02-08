@@ -58,12 +58,10 @@ pipeline {
       sh 'bash ./cd/pipeline-post-always.sh'
 	  archive '**/*.txt'
 	  deleteDir() /* clean up our workspace */
-      //archiveArtifacts(artifacts: '*.txt', fingerprint: true)
     }
     
     changed {
       echo 'CHANGED is run second'
-      sh 'bash ./cd/pipeline-post-changed.sh'
       
     }
     
@@ -74,8 +72,7 @@ pipeline {
     
     success {
       echo 'This build was successful. All steps completed. Perform successful type actions.'
-      sh 'bash ./cd/pipeline-post-success.sh'
-      
+            
     }
     
     unstable {
