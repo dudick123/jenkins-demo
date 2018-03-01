@@ -1,6 +1,9 @@
 pipeline {
   //adding comments from test branch
   agent any
+  triggers {
+        pollSCM 'H/5 * * * *'
+  }	
   
   // Options covers all other job properties or wrapper functions that apply to entire Pipeline.
   options {
