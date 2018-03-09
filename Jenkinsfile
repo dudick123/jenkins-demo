@@ -1,18 +1,5 @@
 pipeline {
-  //adding comments from test branch
   agent any
-  triggers {
-        pollSCM 'H/5 * * * *'
-  }	
-  
-  // Options covers all other job properties or wrapper functions that apply to entire Pipeline.
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-    disableConcurrentBuilds()
-    timeout(time: 5, unit: 'MINUTES')
-    timestamps()
-  }
-  
   stages {
     stage('Goof Around') {
       steps {
@@ -41,7 +28,7 @@ pipeline {
     }
     stage('Test Initial Container') {
       steps {
-        sh 'curl http://localhost:8181'
+        sh 'curl http://localhost:9191'
       }
     }
     stage('Build DTR Image') {
@@ -50,7 +37,7 @@ pipeline {
       }
     }
     stage('Push DTR Image') {
-      steps {        
+      steps {
         sh 'bash ./cd/images-push-dtr.sh'
       }
     }
@@ -65,8 +52,9 @@ pipeline {
     always {
       echo 'Always is is always the first post pipeline step to run.'
       sh 'bash ./cd/pipeline-post-always.sh'
-	  archive '**/*.txt'
-	  deleteDir() /* clean up our workspace */
+      archive '**/*.txt'
+      deleteDir()
+      
     }
     
     changed {
@@ -81,7 +69,7 @@ pipeline {
     
     success {
       echo 'This build was successful. All steps completed. Perform successful type actions.'
-            
+      
     }
     
     unstable {
@@ -95,5 +83,14 @@ pipeline {
       
     }
     
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+    disableConcurrentBuilds()
+    timeout(time: 5, unit: 'MINUTES')
+    timestamps()
+  }
+  triggers {
+    pollSCM('H/5 * * * *')
   }
 }
